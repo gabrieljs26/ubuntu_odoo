@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mi_modulo_mi_modulo,mi_modulo.mi_modulo,model_mi_modulo_mi_modulo,base.group_user,1,1,1,1
+access_mi_modulo_mi_modulo,mi_modulo.mi_modulo,model_mi_modulo_mi_modulo,,0,0,0,0
 access_mi_modulo_mi_modulo_user,mi_modulo.mi_modulo.user,model_mi_modulo_mi_modulo,mi_modulo.group_mi_modulo_user,1,1,0,0
 access_mi_modulo_mi_modulo_admin,mi_modulo.mi_modulo.admin,model_mi_modulo_mi_modulo,mi_modulo.group_mi_modulo_admin,1,1,1,1
-access_mi_modulo_ejemplo_modelo,ejemplo.modelo,model_ejemplo_modelo,base.group_user,1,1,1,1
-access_mi_modulo_mi_modulo_sin_permisos,mi_modulo.mi_modulo.sin_permisos,model_mi_modulo_mi_modulo,base.group_user,0,0,0,0
+access_mi_modulo_ejemplo_modelo,mi_modulo.ejemplo_modelo,model_ejemplo_modelo,,0,0,0,0
+access_mi_modulo_ejemplo_modelo_user,mi_modulo.ejemplo_modelo.user,model_ejemplo_modelo,mi_modulo.group_mi_modulo_user,1,1,0,0
+access_mi_modulo_ejemplo_modelo_admin,mi_modulo.ejemplo_modelo.admin,model_ejemplo_modelo,mi_modulo.group_mi_modulo_admin,1,1,1,1
