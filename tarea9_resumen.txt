@@ -1,0 +1,188 @@
+TAREA 9 – MÓDULOS PERSONALIZADOS III (Odoo)
+=========================================
+
+1) MODELO UTILIZADO
+-------------------
+Modelo principal del módulo:
+- Fichero Python: models/models.py
+- Clase:
+  class MiModulo(models.Model):
+      _name = 'mi_modulo.mi_modulo'
+      _description = 'Modelo principal de mi módulo'
+
+      name = fields.Char(string='Nombre')
+      descripcion = fields.Text(string='Descripción')
+
+- Nombre técnico del modelo: mi_modulo.mi_modulo
+  (este es el valor que se usa en las vistas XML y en la acción: field name="model" / "res_model").
+
+
+2) FICHEROS CARGADOS EN EL MÓDULO
+---------------------------------
+En __manifest__.py se cargan, entre otros:
+- 'security/security.xml'
+- 'security/ir.model.access.csv'
+- 'views/views.xml'
+
+El archivo importante para la tarea 9 es: views/views.xml
+
+
+3) VISTAS DEFINIDAS (views/views.xml)
+-------------------------------------
+En views/views.xml se han definido:
+
+3.1) Tree/List View (vista de lista)
+
+<record id="mi_modulo_view_tree" model="ir.ui.view">
+  <field name="name">mi_modulo.mi_modulo.list</field>
+  <field name="model">mi_modulo.mi_modulo</field>
+  <field name="arch" type="xml">
+    <list string="Registros Mi Módulo" editable="bottom">
+      <field name="name"/>
+      <field name="descripcion"/>
+    </list>
+  </field>
+</record>
+
+- id: mi_modulo_view_tree
+- name: mi_modulo.mi_modulo.list (coincide con el id, cambiando view_tree por list y usando puntos)
+- model: mi_modulo.mi_modulo (nombre técnico del modelo)
+- arch type="xml": definición de la vista con etiqueta <list>
+- Campos que se muestran en la lista: name, descripcion
+
+
+3.2) Form View (vista de formulario)
+
+<record id="mi_modulo_view_form" model="ir.ui.view">
+  <field name="name">mi_modulo.mi_modulo.form</field>
+  <field name="model">mi_modulo.mi_modulo</field>
+  <field name="arch" type="xml">
+    <form string="Mi Módulo">
+      <sheet>
+        <div class="oe_title">
+          <field name="name" class="mb16"/>
+        </div>
+        <group>
+          <field name="descripcion"/>
+        </group>
+      </sheet>
+    </form>
+  </field>
+</record>
+
+- id: mi_modulo_view_form
+- name: mi_modulo.mi_modulo.form
+- model: mi_modulo.mi_modulo
+- Se usan componentes estructurales:
+  - <sheet>: hace el contenido responsive
+  - <div class="oe_title">: zona de título del formulario
+  - <group>: organiza campos en columnas
+- Campos mostrados:
+  - name (arriba, como título)
+  - descripcion (debajo, en el group)
+
+
+4) ACCIÓN DEFINIDA (ir.actions.act_window)
+------------------------------------------
+En el mismo views/views.xml se ha definido la acción que abre las vistas del modelo:
+
+<record id="mi_modulo_action" model="ir.actions.act_window">
+  <field name="name">Mi Módulo</field>
+  <field name="res_model">mi_modulo.mi_modulo</field>
+  <field name="view_mode">list,form</field>
+</record>
+
+- id: mi_modulo_action
+- name: Mi Módulo (texto que verá el usuario)
+- res_model: mi_modulo.mi_modulo
+- view_mode: list,form (primero lista, luego formulario)
+
+
+5) MENÚS DEFINIDOS (ir.ui.menu)
+-------------------------------
+En views/views.xml también se han creado los menús para lanzar la acción:
+
+5.1) Menú nivel 0 (root: menú desplegable de aplicaciones)
+
+<menuitem id="mi_modulo_menu_root" name="Mi Módulo"/>
+
+5.2) Menú nivel 1 (barra de navegación dentro del módulo)
+
+<menuitem id="mi_modulo_menu_main" name="Gestión" parent="mi_modulo_menu_root"/>
+
+5.3) Menú nivel 2 (desplegable bajo el nivel 1, con acción asociada)
+
+<menuitem id="mi_modulo_menu_action" name="Registros" parent="mi_modulo_menu_main"
+          action="mi_modulo_action"/>
+
+- mi_modulo_menu_root: aparece en el menú de aplicaciones
+- mi_modulo_menu_main: aparece como sección dentro del módulo
+- mi_modulo_menu_action: abre la acción mi_modulo_action, que muestra las vistas list y form
+
+
+6) PASOS FUNCIONALES EN ODOO
+----------------------------
+1) Actualizar el módulo "mi_modulo" después de modificar views/views.xml.
+2) En la interfaz de Odoo, ir al menú de aplicaciones y hacer clic en "Mi Módulo".
+3) En la barra de navegación, entrar en "Gestión" -> "Registros".
+4) Allí se ve la vista de lista (Tree View) con las columnas Nombre y Descripción.
+5) Al hacer clic en un registro o pulsar "Crear" se abre la vista de formulario (Form View)
+   con el título "Mi Módulo", el campo Nombre arriba y el campo Descripción debajo.
+
+
+7) CAPTURAS / "FACTURA" QUE DEBES PREPARAR
+-------------------------------------------
+Estas son las capturas que puedes adjuntar en la tarea (por orden lógico):
+
+1) Captura de las VISTAS POR DEFECTO (paso 4 del enunciado)
+   - Antes de personalizar las vistas: comentar temporalmente las vistas en views.xml
+     o usar el estado inicial.
+   - Actualizar el módulo.
+   - Ir a la lista del modelo y hacer:
+     a) Captura de la vista lista por defecto.
+     b) Captura de la vista formulario por defecto.
+   - Esta parte muestra cómo Odoo genera las vistas por defecto.
+
+2) Captura del MENÚ Y LA ACCIÓN
+   - En el menú de aplicaciones, que se vea "Mi Módulo".
+   - Dentro de "Mi Módulo", que se vea la barra de navegación con "Gestión" y el submenú
+     "Registros" (que lanza la acción mi_modulo_action).
+   - Esta captura sirve para justificar la parte de "Acciones" y "Menús" del enunciado.
+
+3) Captura de la TREE VIEW PERSONALIZADA
+   - En "Mi Módulo" -> "Gestión" -> "Registros".
+   - Que se vean:
+     - El título de la lista: "Registros Mi Módulo".
+     - Las columnas "Nombre" y "Descripción".
+     - Algún registro de ejemplo si es posible.
+   - Esta captura muestra que has definido correctamente la "Tree View".
+
+4) Captura de la FORM VIEW PERSONALIZADA
+   - Desde la lista, pulsar "Crear" o abrir un registro existente.
+   - Que se vea:
+     - El título del formulario: "Mi Módulo".
+     - Campo "Nombre" en la parte superior (oe_title).
+     - Campo "Descripción" debajo, dentro de un group.
+   - Esta captura demuestra que has modificado el formulario según la explicación del enunciado.
+
+5) (Opcional) Captura del CÓDIGO XML
+   - Abrir views/views.xml en el editor.
+   - Hacer una captura donde se vean los <record> de:
+     - mi_modulo_view_tree
+     - mi_modulo_view_form
+     - mi_modulo_action
+     - menús mi_modulo_menu_root, mi_modulo_menu_main, mi_modulo_menu_action
+   - Esto refuerza que entiendes cómo están definidas las vistas, la acción y los menús.
+
+
+DÓNDE VA LA "FACTURA" / DOCUMENTO FINAL
+----------------------------------------
+- Si el profesor te pide una "factura" o documento final de la práctica, puedes usar
+  este archivo de texto (tarea9_resumen.txt) como base del contenido teórico.
+- En el documento que entregues (Word, PDF, etc.) puedes organizarlo así:
+  1) Explicación breve de las acciones y menús (puntos 2, 4 y 5 de este archivo).
+  2) Explicación de las vistas (punto 3 de este archivo), copiando los fragmentos XML.
+  3) Insertar las capturas en el orden descrito en el punto 7.
+  4) Añadir si quieres un comentario final sobre lo que has aprendido.
+
+Con este resumen tienes toda la información necesaria para justificar la TAREA 9 paso a paso.

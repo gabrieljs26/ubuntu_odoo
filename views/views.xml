@@ -1,60 +1,39 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="mi_modulo.list">
-      <field name="name">mi_modulo list</field>
+    <record id="mi_modulo_view_tree" model="ir.ui.view">
+      <field name="name">mi_modulo.mi_modulo.list</field>
       <field name="model">mi_modulo.mi_modulo</field>
       <field name="arch" type="xml">
-        <list>
+        <list string="Registros Mi Módulo" editable="bottom">
           <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="descripcion"/>
         </list>
       </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="mi_modulo.action_window">
-      <field name="name">mi_modulo window</field>
+    <record id="mi_modulo_view_form" model="ir.ui.view">
+      <field name="name">mi_modulo.mi_modulo.form</field>
+      <field name="model">mi_modulo.mi_modulo</field>
+      <field name="arch" type="xml">
+        <form string="Mi Módulo">
+          <sheet>
+            <div class="oe_title">
+              <field name="name" class="mb16"/>
+            </div>
+            <group>
+              <field name="descripcion"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="mi_modulo_action" model="ir.actions.act_window">
+      <field name="name">Mi Módulo</field>
       <field name="res_model">mi_modulo.mi_modulo</field>
       <field name="view_mode">list,form</field>
     </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="mi_modulo.action_server">
-      <field name="name">mi_modulo server</field>
-      <field name="model_id" ref="model_mi_modulo_mi_modulo"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "list,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="mi_modulo" id="mi_modulo.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="mi_modulo.menu_1" parent="mi_modulo.menu_root"/>
-    <menuitem name="Menu 2" id="mi_modulo.menu_2" parent="mi_modulo.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="mi_modulo.menu_1_list" parent="mi_modulo.menu_1"
-              action="mi_modulo.action_window"/>
-    <menuitem name="Server to list" id="mi_modulo" parent="mi_modulo.menu_2"
-              action="mi_modulo.action_server"/>
--->
+    <menuitem id="mi_modulo_menu_root" name="Mi Módulo"/>
+    <menuitem id="mi_modulo_menu_main" name="Gestión" parent="mi_modulo_menu_root"/>
+    <menuitem id="mi_modulo_menu_action" name="Registros" parent="mi_modulo_menu_main"
+              action="mi_modulo_action"/>
   </data>
 </odoo>
