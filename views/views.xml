@@ -16,9 +16,18 @@
       <field name="arch" type="xml">
         <form string="Mi Módulo">
           <sheet>
+            <!-- Bloque tipo "estadística" similar al ejemplo (label + field con clases o_stat_*) -->
+            <label for="name" class="o_stat_text">Nombre</label>
+            <field name="name" class="o_stat_value"/>
+
+            <!-- Título y campos principales -->
             <div class="oe_title">
               <field name="name" class="mb16"/>
+              <!-- Uso de un campo invisible para imitar ex_field_3 del ejemplo -->
+              <field name="descripcion" invisible="1"/>
             </div>
+
+            <!-- Contenido principal del formulario -->
             <group>
               <field name="descripcion"/>
             </group>
